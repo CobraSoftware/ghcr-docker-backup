@@ -7,7 +7,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: cobrasoftware
 
 jobs:
   pull-and-push:
@@ -65,7 +65,7 @@ jobs:
             for tag in $tags; do
               echo "Processing $image:$tag..."
               docker pull $image:$tag
-              docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$image-$tag
-              docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$image-$tag
+              docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+              docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
             done
           done <<< "$IMAGE_TAGS"
