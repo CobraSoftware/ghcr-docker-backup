@@ -50,21 +50,68 @@ jobs:
         env:
           IMAGE_TAGS: |
             nginx:bookworm,latest,mainline-alpine,alpine-perl,stable-alpine,stable-alpine-perl
-            redis:bookworm,latest
-            busybox:unstable-uclibc,unstable-glibc,stable-uclibc,stable-glibc,stable,latest
-            mysql:lts-oracle,latest,lts,8.0-debian
-            alpine:latest,edge
-            mariadb:lts,latest
-            ubuntu:rolling,latest
-            postgres:latest,alpine,bookworm
-            node:latest,lts,bookworm,alpine
-            httpd:latest,bookworm,alpine
-            openjdk:latest
-            golang:bookworm,bullseye,alpine
-            python:bookworm,bullseye,alpine
+            redis:bookworm,latest,alpine,bullseye
+            busybox:unstable-uclibc,unstable-glibc,stable-uclibc,stable-glibc,stable,latest,musl
+            mysql:lts-oracle,latest,lts,8.0-debian,8.0,5.7
+            alpine:latest,edge,3.18,3.17
+            mariadb:lts,latest,10.11,10.6
+            ubuntu:rolling,latest,22.04,20.04
+            postgres:latest,alpine,bookworm,16,15
+            node:latest,lts,bookworm,alpine,20,18
+            httpd:latest,bookworm,alpine,2.4,2.4-alpine
+            openjdk:latest,21,17,11
+            golang:bookworm,bullseye,alpine,1.22,1.21
+            python:bookworm,bullseye,alpine,3.12,3.11
             dockurr/windows:latest
             dockurr/casa:latest
             dockurr/umbrel:latest
+            traefik:latest,v2.11,v2.10
+            portainer/portainer-ce:latest,linux-amd64,alpine
+            nginxproxy/nginx-proxy:latest,alpine
+            watchtower:latest,arm64,amd64
+            bitnami/mongodb:latest,6.0,5.0
+            vaultwarden/server:latest,alpine,arm64
+            sonarr:latest,develop,preview
+            radarr:latest,nightly,develop
+            jellyfin/jellyfin:latest,unstable,10.8.9
+            plexinc/pms-docker:latest,plexpass,public
+            linuxserver/heimdall:latest,develop,arm64
+            jc21/nginx-proxy-manager:latest,2.9,2.10
+            homeassistant/home-assistant:latest,stable,dev
+            mosquitto:latest,2.0,1.6
+            grafana/grafana:latest,9.6,10.0
+            prom/prometheus:latest,v2.47,v2.46
+            influxdb:latest,2.7,2.6
+            telegraf:latest,1.28,1.27
+            loki:latest,2.9,2.8
+            bitnami/wordpress:latest,6.4,6.3
+            nextcloud:latest,apache,fpm
+            gitlab/gitlab-ce:latest,16.10,16.9
+            gitea/gitea:latest,1.21,1.20
+            bitnami/matomo:latest,4.14,4.13
+            shlinkio/shlink:latest,3.5,3.4
+            standardnotes/web:latest,stable,dev
+            ttrss/ttrss:latest,stable,nightly
+            registry:latest,2,2.8,2.7
+            ruby:latest,3.3,3.2,3.1
+            wordpress:latest,php8.2-apache,php8.1-fpm
+            debian:latest,bookworm,bullseye
+            php:latest,8.3,8.2,8.1
+            centos:latest,7,8
+            haproxy:latest,2.9,2.8,2.7
+            influxdb:latest,2.7,2.6,1.8
+            consul:latest,1.16,1.15,1.14
+            nextcloud:latest,27,26,25
+            amazonlinux:latest,2023,2
+            elasticsearch:latest,8.11,8.10,7.17
+            tomcat:latest,10.1,9.0,8.5
+            maven:latest,3.9,3.8,3.6
+            caddy:latest,2.7,2.6,2.5
+            bash:latest,5.2,5.1,5.0
+            ghost:latest,5.73,5.72,5.71
+            solr:latest,9.4,9.3,8.11
+            kong:latest,3.5,3.4,3.3
+            perl:latest,5.38,5.36,5.34
         run: |
           while IFS= read -r line; do
             image=$(echo $line | cut -d: -f1)
