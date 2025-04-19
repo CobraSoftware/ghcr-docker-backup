@@ -70,7 +70,7 @@ jobs:
             traefik:latest,v2.11,v2.10
             portainer/portainer-ce:latest,linux-amd64,alpine
             nginxproxy/nginx-proxy:latest,alpine
-            watchtower:latest,arm64,amd64
+            containrrr/watchtower:latest,arm64,amd64
             bitnami/mongodb:latest,6.0,5.0
             vaultwarden/server:latest,alpine,arm64
             sonarr:latest,develop,preview
