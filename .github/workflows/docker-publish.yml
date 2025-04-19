@@ -73,8 +73,8 @@ jobs:
             containrrr/watchtower:latest,arm64,amd64
             bitnami/mongodb:latest,6.0,5.0
             vaultwarden/server:latest,alpine,arm64
-            sonarr:latest,develop,preview
-            radarr:latest,nightly,develop
+            # sonarr:latest,develop,preview
+            # radarr:latest,nightly,develop
             jellyfin/jellyfin:latest,unstable,10.8.9
             plexinc/pms-docker:latest,plexpass,public
             linuxserver/heimdall:latest,develop,arm64
@@ -114,15 +114,35 @@ jobs:
             solr:latest,9.4,9.3,8.11
             kong:latest,3.5,3.4,3.3
             perl:latest,5.38,5.36,5.34
+        # run: |
+        #   while IFS= read -r line; do
+        #     image=$(echo $line | cut -d: -f1)
+        #     tags=$(echo $line | cut -d: -f2 | tr ',' ' ')
+        #     for tag in $tags; do
+        #       echo "Processing $image:$tag..."
+        #       docker pull $image:$tag
+        #       docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+        #       docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+        #     done
+        #   done <<< "$IMAGE_TAGS"
         run: |
           while IFS= read -r line; do
             image=$(echo $line | cut -d: -f1)
             tags=$(echo $line | cut -d: -f2 | tr ',' ' ')
             for tag in $tags; do
               echo "Processing $image:$tag..."
-              docker pull $image:$tag
-              docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
-              docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+              if ! docker pull $image:$tag; then
+                echo "Error pulling $image:$tag. Skipping..."
+                continue
+              fi
+              if ! docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag; then
+                echo "Error tagging $image:$tag. Skipping..."
+                continue
+              fi
+              if ! docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag; then
+                echo "Error pushing $image:$tag. Skipping..."
+                continue
+              fi
             done
           done <<< "$IMAGE_TAGS"
 
