@@ -35,11 +35,11 @@ jobs:
       - name: Pull and Push Quay.io Tagged Images
         env:
           IMAGE_TAGS: |
-            quay.io/centos/centos:stream9,stream8,latest
-            quay.io/bootc-extension/httpd:latest
-            quay.io/fedora/fedora-bootc:latest
-            quay.io/fedora/fedora-silverblue:latest
-            quay.io/fedora/fedora-coreos-kubevirt:latest
+            # quay.io/centos/centos:stream9,stream8,latest
+            # quay.io/bootc-extension/httpd:latest
+            # quay.io/fedora/fedora-bootc:latest
+            # quay.io/fedora/fedora-silverblue:latest
+            quay.io/fedora/fedora-coreos-kubevirt:rawhide,testing-devel,testing,stable,next,next-devel,branched
             quay.io/fedora/fedora-sway-atomic:latest
             quay.io/centos-bootc/centos-bootc:latest
             quay.io/fedora/fedora-toolbox:latest
