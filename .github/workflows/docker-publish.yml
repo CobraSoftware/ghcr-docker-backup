@@ -172,6 +172,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Pull and Push Windows Tagged Images
+        shell: bash
         env:
           IMAGE_TAGS: |
             mcr.microsoft.com/windows/servercore:ltsc2022,latest,ltsc2019,ltsc2025
@@ -191,7 +192,7 @@ jobs:
           done <<< "$IMAGE_TAGS"
 
 
-          pull-and-push-quay:
+      pull-and-push-quay:
             runs-on: ubuntu-latest
             permissions:
               contents: read
