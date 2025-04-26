@@ -1,4 +1,4 @@
-name: Quay.io Multi-Arch image back up with Tags
+name: Windows Multi-Arch image back up with Tags
 
 on:
   workflow_dispatch:
