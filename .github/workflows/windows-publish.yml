@@ -2,6 +2,7 @@ name: Windows Multi-Arch image back up with Tags
 
 on:
   workflow_dispatch:
+  on: push
   schedule:
   # Runs at 8:00 AM UTC every Tuesday
   - cron: '0 8 * * 2'
