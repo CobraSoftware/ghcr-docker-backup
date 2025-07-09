@@ -3,6 +3,7 @@ name: Docker Multi-Arch image back up with Tags
 on:
   workflow_dispatch:
   schedule:
+  on: push
   # Runs at 8:00 AM UTC every Thursday 
   - cron: '0 8 * * 4'
 
