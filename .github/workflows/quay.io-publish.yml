@@ -38,7 +38,7 @@ jobs:
 
             quay.io/fedora/fedora-coreos-kubevirt:rawhide,testing-devel,testing,stable,next,next-devel,branched
             quay.io/fedora/fedora-sway-atomic:latest
-            quay.io/centos-bootc/centos-bootc:latest
+            quay.io/centos-bootc/centos-bootc:stream9
             quay.io/fedora/fedora-toolbox:latest
             quay.io/fedora/fedora-budgie-atomic:latest
             quay.io/fedora/fedora:latest
