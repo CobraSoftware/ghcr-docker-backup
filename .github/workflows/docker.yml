@@ -1,3 +1,56 @@
+
+name: Docker Multi-Arch image back up with Tags
+
+on:
+  workflow_dispatch:
+  schedule:
+  # Runs at 8:00 AM UTC every Friday
+  - cron: '0 8 * * 5'
+
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: cobrasoftware
+
+jobs:
+  pull-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Log into GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: cobrasoftware
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Set up QEMU for multi-arch builds
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64
+
+      - name: Set up Docker Buildx for multi-arch builds
+        uses: docker/setup-buildx-action@v2
+
+      - name: Pull and Push Tagged Images
+        env:
+          IMAGE_TAGS: |
             nginx:bookworm,latest,mainline-alpine,alpine-perl,stable-alpine,stable-alpine-perl
             redis:bookworm,latest,alpine,bullseye
             busybox:unstable-uclibc,unstable-glibc,stable-uclibc,stable-glibc,stable,latest,musl
@@ -15,3 +68,34 @@
             dockurr/casa:latest
             dockurr/umbrel:latest
             dockurr/samba:latest
+        # run: |
+        #   while IFS= read -r line; do
+        #     image=$(echo $line | cut -d: -f1)
+        #     tags=$(echo $line | cut -d: -f2 | tr ',' ' ')
+        #     for tag in $tags; do
+        #       echo "Processing $image:$tag..."
+        #       docker pull $image:$tag
+        #       docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+        #       docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag
+        #     done
+        #   done <<< "$IMAGE_TAGS"
+        run: |
+          while IFS= read -r line; do
+            image=$(echo $line | cut -d: -f1)
+            tags=$(echo $line | cut -d: -f2 | tr ',' ' ')
+            for tag in $tags; do
+              echo "Processing $image:$tag..."
+              if ! docker pull $image:$tag; then
+                echo "Error pulling $image:$tag. Skipping..."
+                continue
+              fi
+              if ! docker tag $image:$tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag; then
+                echo "Error tagging $image:$tag. Skipping..."
+                continue
+              fi
+              if ! docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/$image:$tag; then
+                echo "Error pushing $image:$tag. Skipping..."
+                continue
+              fi
+            done
+          done <<< "$IMAGE_TAGS"
