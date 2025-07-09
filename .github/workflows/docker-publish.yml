@@ -114,6 +114,8 @@ jobs:
             solr:latest,9.4,9.3,8.11
             kong:latest,3.5,3.4,3.3
             perl:latest,5.38,5.36,5.34
+            beclab/olaresd:proxy-v0.1.0
+            beclab/olares:1.11.6-cn,1.11.6,1.11.5-cn,1.11.5
         # run: |
         #   while IFS= read -r line; do
         #     image=$(echo $line | cut -d: -f1)
