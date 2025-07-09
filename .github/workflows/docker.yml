@@ -1,0 +1,17 @@
+            nginx:bookworm,latest,mainline-alpine,alpine-perl,stable-alpine,stable-alpine-perl
+            redis:bookworm,latest,alpine,bullseye
+            busybox:unstable-uclibc,unstable-glibc,stable-uclibc,stable-glibc,stable,latest,musl
+            mysql:lts-oracle,latest,lts,8.0-debian,8.0,5.7
+            alpine:latest,edge,3.18,3.17
+            mariadb:lts,latest,10.11,10.6
+            ubuntu:rolling,latest,22.04,20.04
+            postgres:latest,alpine,bookworm,16,15
+            node:latest,lts,bookworm,alpine,20,18
+            httpd:latest,bookworm,alpine,2.4,2.4-alpine
+            openjdk:latest,21,17,11
+            golang:bookworm,bullseye,alpine,1.22,1.21
+            python:bookworm,bullseye,alpine,3.12,3.11
+            dockurr/windows:latest
+            dockurr/casa:latest
+            dockurr/umbrel:latest
+            dockurr/samba:latest
