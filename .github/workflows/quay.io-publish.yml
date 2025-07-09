@@ -2,7 +2,7 @@ name: Quay.io Multi-Arch image back up with Tags
 
 on:
   workflow_dispatch:
-  on: push
+  push:
   schedule:
   # Runs at 8:00 AM UTC every Wednesday
   - cron: '0 8 * * 3'
